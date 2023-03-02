@@ -22,6 +22,18 @@ function drawACard2(hand = []) {
   return "";
 }
 
+// Approach 1, drawHand
+function drawHand() {
+  let hand = [];
+
+  while (hand.length < 5) {
+    let card = drawACard();
+    if (!hand.includes(card)) hand.push(card);
+  }
+
+  return hand;
+}
+
 // const NUM_TRIALS = 100000;
 
 // const suits = "SHDC".split("");
