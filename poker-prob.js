@@ -86,12 +86,30 @@ function isStraight(hand) {
   // );
 }
 
+function isOnePair(hand) {
+  sortHand(hand);
+  if (hand[0][1] === hand[1][1]) {
+    return (
+      hand[1][1] !== hand[2][1] &&
+      hand[2][1] !== hand[3][1] &&
+      hand[3][1] !== hand[4][1]
+    );
+  }
+  if (hand[1][1] === hand[2][1]) {
+    return hand[2][1] !== hand[3][1] && hand[3][1] !== hand[4][1];
+  }
+  if (hand[2][1] === hand[3][1]) {
+    return hand[3][1] !== hand[4][1];
+  }
+  return hand[3][1] === hand[4][1];
+}
+
 //let hand = drawHand();
-let hand = ["SJ", "ST", "S9", "S8", "S7"];
+let hand = ["SJ", "H9", "S9", "S8", "D9"];
 console.log(hand);
-hand.sort();
+sortHand(hand);
 console.log(hand);
-console.log(isStraight(hand));
+console.log(isOnePair(hand));
 
 // const NUM_TRIALS = 100000;
 
