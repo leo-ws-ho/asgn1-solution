@@ -3,10 +3,23 @@ const NUM_TRIALS = 3;
 const suits = "SHDC";
 const numbers = "AKQJT98765432";
 
+// Approach 1
 function drawACard() {
   let suit = suits[Math.floor(Math.random() * suits.length)];
   let number = numbers[Math.floor(Math.random() * numbers.length)];
   return suit + number;
+}
+
+// Approach 2, draw a card NOT in hand.
+function drawACard2(hand = []) {
+  let card = "";
+  while (true) {
+    card =
+      suits[Math.floor(Math.random() * suits.length)] +
+      numbers[Math.floor(Math.random() * numbers.length)];
+    if (!hand.includes(card)) return card;
+  }
+  return "";
 }
 
 // const NUM_TRIALS = 100000;
