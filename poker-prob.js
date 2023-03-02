@@ -34,6 +34,65 @@ function drawHand() {
   return hand;
 }
 
+// Approach 2, drawHand2
+function drawHand2() {
+  let hand = [];
+  for (let i = 0; i < 5; ++i) {
+    hand.push(drawACard2(hand));
+  }
+  return hand;
+}
+
+/**
+ * returns true if the poker hand is a flush.  false otherwise.
+ * @param {Array} hand a poker hand, like ['SA', 'ST', 'S3', 'S8', 'S7']
+ * @returns {Boolean}
+ */
+function isFlush(hand) {
+  return (
+    hand[0][0] === hand[1][0] &&
+    hand[1][0] === hand[2][0] &&
+    hand[2][0] === hand[3][0] &&
+    hand[3][0] === hand[4][0]
+  );
+}
+
+function sortHand(hand) {
+  hand.sort((card1, card2) => {
+    return numbers.indexOf(card1[1]) - numbers.indexOf(card2[1]);
+  });
+}
+
+function isStraight(hand) {
+  sortHand(hand);
+
+  console.log(hand);
+  for (let i = 0; i < 5; i++) {
+    console.log(hand[i][1], numbers.indexOf(hand[i][1]));
+  }
+
+  for (let i = 0; i < 4; i++) {
+    if (numbers.indexOf(hand[i][1]) + 1 !== numbers.indexOf(hand[i + 1][1]))
+      return false;
+  }
+
+  return true;
+
+  // return (
+  //   numbers.indexOf(hand[0][1]) === numbers.indexOf(hand[1][1]) - 1 &&
+  //   numbers.indexOf(hand[1][1]) === numbers.indexOf(hand[2][1]) - 1 &&
+  //   numbers.indexOf(hand[2][1]) === numbers.indexOf(hand[3][1]) - 1 &&
+  //   numbers.indexOf(hand[3][1]) === numbers.indexOf(hand[4][1]) - 1
+  // );
+}
+
+//let hand = drawHand();
+let hand = ["SJ", "ST", "S9", "S8", "S7"];
+console.log(hand);
+hand.sort();
+console.log(hand);
+console.log(isStraight(hand));
+
 // const NUM_TRIALS = 100000;
 
 // const suits = "SHDC".split("");
