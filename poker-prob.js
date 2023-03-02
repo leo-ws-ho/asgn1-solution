@@ -22,7 +22,7 @@ function drawACard2(hand = []) {
   return "";
 }
 
-// Approach 1, drawHand
+// Approach 1, drawHand.  Returns a hand, with all the cards sorted according to rank.
 function drawHand() {
   let hand = [];
 
@@ -31,6 +31,7 @@ function drawHand() {
     if (!hand.includes(card)) hand.push(card);
   }
 
+  sortHand(hand);
   return hand;
 }
 
@@ -48,13 +49,17 @@ function drawHand2() {
  * @param {Array} hand a poker hand, like ['SA', 'ST', 'S3', 'S8', 'S7']
  * @returns {Boolean}
  */
-function isFlush(hand) {
+function isOfSameSuit(hand) {
   return (
     hand[0][0] === hand[1][0] &&
     hand[1][0] === hand[2][0] &&
     hand[2][0] === hand[3][0] &&
     hand[3][0] === hand[4][0]
   );
+}
+
+function isFlush(hand) {
+  return isOfSameSuit(hand) && !isSequential(hand);
 }
 
 function sortHand(hand) {
@@ -64,8 +69,10 @@ function sortHand(hand) {
 }
 
 function isStraight(hand) {
-  sortHand(hand);
+  return isSequential(hand) && !isOfSameSuit(hand);
+}
 
+function isSequential(hand) {
   console.log(hand);
   for (let i = 0; i < 5; i++) {
     console.log(hand[i][1], numbers.indexOf(hand[i][1]));
@@ -87,7 +94,6 @@ function isStraight(hand) {
 }
 
 function isOnePair(hand) {
-  sortHand(hand);
   if (hand[0][1] === hand[1][1]) {
     return (
       hand[1][1] !== hand[2][1] &&
@@ -104,12 +110,34 @@ function isOnePair(hand) {
   return hand[3][1] === hand[4][1];
 }
 
-//let hand = drawHand();
-let hand = ["SJ", "H9", "S9", "S8", "D9"];
-console.log(hand);
-sortHand(hand);
-console.log(hand);
-console.log(isOnePair(hand));
+function isStraightFlush(hand) {
+  return isSequential(hand) && isOfSameSuit(hand);
+}
+
+function isThreeOfAKind(hand) {
+  if (hand[0][1] === hand[1][1] && hand[1][1] === hand[2][1]) {
+    return hand[2][1] !== hand[3][1] && hand[3][1] !== hand[4][1];
+  }
+  if (hand[1][1] === hand[2][1] && hand[2][1] === hand[3][1]) {
+    return hand[3][1] !== hand[4][1];
+  }
+  return hand[2][1] === hand[3][1] && hand[3][1] === hand[4][1];
+}
+
+function isFourOfAKind(hand) {
+  if (
+    hand[0][1] === hand[1][1] &&
+    hand[1][1] === hand[2][1] &&
+    hand[2][1] === hand[3][1]
+  ) {
+    return true;
+  }
+  return (
+    hand[1][1] === hand[2][1] &&
+    hand[2][1] === hand[3][1] &&
+    hand[3][1] === hand[4][1]
+  );
+}
 
 // const NUM_TRIALS = 100000;
 
