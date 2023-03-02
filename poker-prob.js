@@ -1,4 +1,4 @@
-const NUM_TRIALS = 3;
+const NUM_TRIALS = 100000;
 
 const suits = "SHDC";
 const numbers = "AKQJT98765432";
@@ -73,11 +73,6 @@ function isStraight(hand) {
 }
 
 function isSequential(hand) {
-  console.log(hand);
-  for (let i = 0; i < 5; i++) {
-    console.log(hand[i][1], numbers.indexOf(hand[i][1]));
-  }
-
   for (let i = 0; i < 4; i++) {
     if (numbers.indexOf(hand[i][1]) + 1 !== numbers.indexOf(hand[i + 1][1]))
       return false;
@@ -138,6 +133,31 @@ function isFourOfAKind(hand) {
     hand[3][1] === hand[4][1]
   );
 }
+
+let flushCount = 0;
+let straightCount = 0;
+let threeOfAKindCount = 0;
+let fourOfAKindCount = 0;
+let onePairCount = 0;
+let straightFlushCount = 0;
+
+for (let i = 0; i < NUM_TRIALS; ++i) {
+  let hand = drawHand();
+
+  if (isFlush(hand)) ++flushCount;
+  if (isStraight(hand)) ++straightCount;
+  if (isThreeOfAKind(hand)) ++threeOfAKindCount;
+  if (isFourOfAKind(hand)) ++fourOfAKindCount;
+  if (isOnePair(hand)) ++onePairCount;
+  if (isStraightFlush(hand)) ++straightFlushCount;
+}
+
+console.log("Flush: ", flushCount / NUM_TRIALS);
+console.log("Straight: ", straightCount / NUM_TRIALS);
+console.log("Three: ", threeOfAKindCount / NUM_TRIALS);
+console.log("Four: ", fourOfAKindCount / NUM_TRIALS);
+console.log("Pair: ", onePairCount / NUM_TRIALS);
+console.log("SF: ", straightFlushCount / NUM_TRIALS);
 
 // const NUM_TRIALS = 100000;
 
